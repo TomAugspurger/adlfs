@@ -745,6 +745,7 @@ class AzureBlobFileSystem(AsyncFileSystem):
                 containers = [c async for c in contents]
                 files = await self._details(containers)
                 self.dircache[_ROOT_PATH] = files
+                return files
 
             return self.dircache[_ROOT_PATH]
         else:
@@ -808,6 +809,7 @@ class AzureBlobFileSystem(AsyncFileSystem):
                             raise FileNotFoundError
                         return []
                     self.dircache[target_path] = finalblobs
+                    return finalblobs
 
             return self.dircache[target_path]
 

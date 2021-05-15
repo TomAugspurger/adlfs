@@ -1172,3 +1172,14 @@ def test_exists(storage):
     assert not fs.exists("non-existent-container/")
     assert fs.exists("")
     assert not fs.exists("data/not-a-key")
+
+
+def test_nodircache(storage):
+    fs = AzureBlobFileSystem(
+        account_name=storage.account_name,
+        connection_string=CONN_STR,
+        use_listings_cache=False,
+        skip_instance_cache=True,
+    )
+    result = fs.cat_file("data/top_file.txt")
+    assert result
